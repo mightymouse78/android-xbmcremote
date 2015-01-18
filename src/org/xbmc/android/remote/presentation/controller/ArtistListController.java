@@ -22,6 +22,8 @@
 package org.xbmc.android.remote.presentation.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.xbmc.android.remote.R;
 import org.xbmc.android.remote.business.ManagerFactory;
@@ -104,6 +106,15 @@ public class ArtistListController extends ListController implements IController 
 				public void run() {
 					if (value.size() > 0) {
 						setTitle(title + " (" + value.size() + ")");
+
+                        // sort artists on name
+                        Collections.sort(value, new Comparator<Artist>() {
+                            @Override
+                            public int compare(Artist artist1, Artist artist2) {
+
+                                return artist1.getName().compareToIgnoreCase(artist2.getName());
+                            }
+                        });
 						((AdapterView<ListAdapter>) mList).setAdapter(new ArtistAdapter(mActivity, value));
 					} else {
 						setTitle(title);
